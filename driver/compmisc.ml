@@ -30,10 +30,34 @@ let init_path ?(dir="") () =
     !Compenv.first_include_dirs
   in
   let exp_dirs =
+    List.map (Misc.expand_directory Config.standard_library) dirs 
+  in
+  let tempname = 
+    if !Clflags.remove_cwd then 
+      List.rev_append exp_dirs (Clflags.std_include_dir ()) @ [dir]
+    else 
+      dir :: List.rev_append exp_dirs (Clflags.std_include_dir ()) 
+  in
+  Load_path.init(tempname);
+  Env.reset_cache ()
+   
+   (*
+let init_path ?(dir="") () =
+  let dirs =
+    if !Clflags.use_threads then "+threads" :: !Clflags.include_dirs
+    else
+      !Clflags.include_dirs
+  in
+  let dirs =
+    !Compenv.last_include_dirs @ dirs @ Config.flexdll_dirs @
+    !Compenv.first_include_dirs
+  in
+  let exp_dirs =
     List.map (Misc.expand_directory Config.standard_library) dirs in
   Load_path.init (dir :: List.rev_append exp_dirs (Clflags.std_include_dir ()));
   Env.reset_cache ()
 
+  *)
 (* Return the initial environment in which compilation proceeds. *)
 
 (* Note: do not do init_path() in initial_env, this breaks
