@@ -1020,6 +1020,7 @@ AS_IF([test x"$supports_shared_libraries" = 'xtrue'],
     [earm*-*-netbsd*], [natdynlink=true],
     [aarch64-*-linux*], [natdynlink=true],
     [aarch64-*-freebsd*], [natdynlink=true],
+    [aarch64-*-openbsd*], [natdynlink=true],
     [riscv*-*-linux*], [natdynlink=true])])
 
 AS_CASE([$enable_native_toplevel,$natdynlink],
@@ -1132,6 +1133,8 @@ dnl   [arch=amd64; system=beos],
     [arch=arm64; system=linux],
 dnl [aarch64-*-freebsd*],
 dnl   [arch=arm64; system=freebsd],
+  [aarch64-*-openbsd*],
+    [arch=arm64; system=openbsd],
 dnl [x86_64-*-cygwin*],
 dnl   [arch=amd64; system=cygwin],
 dnl [riscv64-*-linux*],
@@ -1293,6 +1296,13 @@ AS_IF([$has_c99_float_ops],
        [AC_MSG_WARN(m4_normalize([
          C99 float ops unavailable, replacements enabled
          (ancient Visual Studio)]))])])])
+
+## getentropy
+AC_CHECK_HEADER([unistd.h],
+  [AC_CHECK_DECL([getentropy],
+                 [AC_DEFINE([HAS_GETENTROPY])], [],
+                 [[#include <unistd.h>]])],
+  [])
 
 ## getrusage
 AC_CHECK_FUNC([getrusage], [AC_DEFINE([HAS_GETRUSAGE])])

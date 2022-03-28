@@ -104,11 +104,16 @@ Working version
   bigarray library (the Bigarray module is now part of the standard library).
   (Nicolás Ojeda Bär, review by Kate Deplaix and Anil Madhavapeddy)
 
+- #10921: Use getentropy, when available, to seed the generator during
+  `Random.self_init`
+  (Michael Hendricks, review by Gabriel Scherer, Xavier Leroy, and
+  Anil Madhavapeddy)
+
 * #10924: Add deprecated attribute to Printexc.catch, Printf.kprintf and
   Unix.SO_ERROR.
   (Nicolás Ojeda Bär, review by Damien Doligez)
 
-- #10986: Add Scqnf.sscanf_opt, Scanf.bscanf_opt and Scanf.scanf_opt.
+- #10986: Add Scanf.sscanf_opt, Scanf.bscanf_opt and Scanf.scanf_opt.
   (Nicolás Ojeda Bär, review by Florian Angeletti and Gabriel Scherer)
 
 ### Other libraries:
@@ -186,6 +191,9 @@ Working version
   DEFAULT_STRING=safe which are now the default unconditionally.
   (Kate Deplaix, review by Gabriel Scherer and David Allsopp)
 
+- #11092: Build native-code compilers on OpenBSD/aarch64.
+  (Christopher Zimmermann, review by Anil Madhavapeddy)
+
 ### Bug fixes:
 
 - #11112: harden -use-runtime against spaces or quotes in the provided path
@@ -194,6 +202,12 @@ Working version
 - #11068, #11070: Fix typo in function name given in Unix_error exception for
   Unix.readlink on Windows.
   (David Allsopp, report by Xia Li-yao)
+
+- #10807: Don't duplicate standard handles in the child process
+  spawned by win32unix Unix.create_process if the handles were already
+  inheritable. Fix broken signalling of EOF on standard handles if
+  they were already inheritable.
+  (Antonin Décimo, review by Xavier Leroy and Nicolás Ojeda Bär)
 
 - #11077: Make dumpobj compatible with absence of naked pointer support
   (Olivier Nicole and Jan Midtgaard, review by Gabriel Scherer)
@@ -444,6 +458,13 @@ OCaml 4.14.0
 - #10671, #10672: webman: Fix misalignments in unordered lists by changing the
   CSS for coloring bullets
   (Wiktor Kuchta, review by Florian Angeletti)
+
+- #11107: Lifted comments in the Parsetree module into actual documentation.
+  (Paul-Elliot Anglès d'Auriac, review by Florian Angeletti)
+
+- #11120, #11133: man pages, add missing warning entries and add mnemonic names
+  to the list of warnings.
+  (Florian Angeletti, report by Kate Deplaix, review by Gabriel Scherer)
 
 ### Compiler user-interface and warnings:
 
